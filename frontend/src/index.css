@@ -1,115 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Outfit:wght@400;700;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
+/* ============================================================
+   Accessibility Games — Global Design System
+   Four themes (driven by [data-theme]):
+     - light  (default — Warm Sand + Deep Forest)
+     - hc     (True High-Contrast: black/white/yellow)
+     - calm   (Calm Low-Stimulation)
+     - dark   (Dark mode)
+   Plus user-tunable text scale (1.0 → 1.5)
+   ============================================================ */
+
+:root {
+  /* light default */
+  --bg-base: #FFFDF8;
+  --bg-soft: #F5EFE0;
+  --text-main: #0A1128;
+  --text-muted: #4B5563;
+  --primary: #1E5C45;
+  --primary-foreground: #FFFFFF;
+  --secondary: #B33925;
+  --secondary-foreground: #FFFFFF;
+  --accent: #E0B243;
+  --accent-foreground: #0A1128;
+  --border-color: #0A1128;
+  --focus-ring: #B33925;
+  --shadow-color: #0A1128;
+
+  --text-scale: 1;
+  --motion-scale: 1;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+}
+
+[data-theme='hc'] {
+  --bg-base: #000000;
+  --bg-soft: #111111;
+  --text-main: #FFFFFF;
+  --text-muted: #EAEAEA;
+  --primary: #FFFF00;
+  --primary-foreground: #000000;
+  --secondary: #FFFFFF;
+  --secondary-foreground: #000000;
+  --accent: #FFFF00;
+  --accent-foreground: #000000;
+  --border-color: #FFFFFF;
+  --focus-ring: #FFFF00;
+  --shadow-color: #FFFFFF;
+}
+
+[data-theme='calm'] {
+  --bg-base: #F0F4F8;
+  --bg-soft: #E2E8F0;
+  --text-main: #1A202C;
+  --text-muted: #4A5568;
+  --primary: #2B6CB0;
+  --primary-foreground: #FFFFFF;
+  --secondary: #4A5568;
+  --secondary-foreground: #FFFFFF;
+  --accent: #38A169;
+  --accent-foreground: #FFFFFF;
+  --border-color: #4A5568;
+  --focus-ring: #2B6CB0;
+  --shadow-color: #4A5568;
+}
+
+[data-theme='dark'] {
+  --bg-base: #121212;
+  --bg-soft: #1E1E1E;
+  --text-main: #E0E0E0;
+  --text-muted: #B0B0B0;
+  --primary: #64FFDA;
+  --primary-foreground: #000000;
+  --secondary: #BB86FC;
+  --secondary-foreground: #000000;
+  --accent: #FFB74D;
+  --accent-foreground: #000000;
+  --border-color: #E0E0E0;
+  --focus-ring: #64FFDA;
+  --shadow-color: #000000;
+}
+
+@layer base {
+  html {
+    font-size: calc(18px * var(--text-scale));
+  }
+  body {
     margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-heading);
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+  }
+  *:focus-visible {
+    outline: 4px solid var(--focus-ring);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  /* Make text selection high contrast */
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
 }
 
-code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+@layer components {
+  .ag-shadow {
+    box-shadow: 8px 8px 0 0 var(--shadow-color);
+  }
+  .ag-shadow-sm {
+    box-shadow: 4px 4px 0 0 var(--shadow-color);
+  }
+  .ag-shadow-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 12px 12px 0 0 var(--shadow-color);
+  }
+  .ag-card {
+    background: var(--bg-base);
+    border: 3px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.5rem;
+  }
+  .ag-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 64px;
+    padding: 0.85rem 1.5rem;
+    border: 3px solid var(--border-color);
+    background: var(--primary);
+    color: var(--primary-foreground);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.125rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 200ms, box-shadow 200ms, background 150ms;
+    box-shadow: 6px 6px 0 0 var(--shadow-color);
+  }
+  .ag-btn:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 0 var(--shadow-color);
+  }
+  .ag-btn:active:not(:disabled) {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 0 var(--shadow-color);
+  }
+  .ag-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  .ag-btn--secondary {
+    background: var(--bg-base);
+    color: var(--text-main);
+  }
+  .ag-btn--accent {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+  .ag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.8rem;
+    border: 2px solid var(--border-color);
+    border-radius: 999px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 0.9rem;
+    background: var(--bg-soft);
+    color: var(--text-main);
+  }
+  .ag-input {
+    width: 100%;
+    min-height: 60px;
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 1.125rem;
+    background: var(--bg-base);
+    color: var(--text-main);
+    font-family: var(--font-body);
+  }
+  .ag-skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    padding: 1rem 1.5rem;
+    z-index: 9999;
+    font-weight: 700;
+    border: 3px solid var(--border-color);
+  }
+  .ag-skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+  }
+  .ag-game-tile {
+    background: var(--bg-base);
+    border: 3px solid var(--border-color);
+    border-radius: 18px;
+    padding: 1.75rem;
+    text-align: left;
+    box-shadow: 8px 8px 0 0 var(--shadow-color);
+    transition: transform 200ms, box-shadow 200ms;
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    height: 100%;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .ag-game-tile:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 12px 12px 0 0 var(--shadow-color);
+  }
+  .ag-game-tile:focus-visible {
+    outline: 4px solid var(--focus-ring);
+    outline-offset: 4px;
+  }
 }
 
-@layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
-        --radius: 0.5rem;
-    }
-    .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
-    }
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+[data-motion='reduced'] *, [data-motion='reduced'] *::before, [data-motion='reduced'] *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
 }
 
-@layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
+/* Slow breathing animation for breathing game */
+@keyframes ag-breathe-in {
+  from { transform: scale(0.6); }
+  to { transform: scale(1); }
+}
+@keyframes ag-breathe-out {
+  from { transform: scale(1); }
+  to { transform: scale(0.6); }
 }
 
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
-    }
+/* Subtle pulse for wheel pointer */
+@keyframes ag-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
 
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
-    }
+.ag-no-flash * { animation: none !important; }
+
+/* Honeycomb of supporting shadcn — ensure visible borders use our colors */
+.ag-screen {
+  min-height: calc(100vh - 64px);
+  padding: 2rem 1rem;
+}
+@media (min-width: 768px) {
+  .ag-screen { padding: 3rem 2rem; }
 }
