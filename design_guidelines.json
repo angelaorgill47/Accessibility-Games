@@ -1,0 +1,158 @@
+{
+  "project_name": "Accessibility Games",
+  "theme_and_archetype": {
+    "primary_archetype": "Archetype 1 (Organic & Earthy) blended with Neo-Brutalist contrast",
+    "description": "A calm, grounded, and high-contrast design system. It uses soft organic base colors combined with strictly defined, high-contrast borders and typography to ensure complete legibility and WCAG 2.2 AAA compliance without appearing clinical or infantilizing.",
+    "themes": [
+      "Light High-Contrast (Default)",
+      "True High-Contrast (Black/White/Yellow)",
+      "Calm Low-Stimulation",
+      "Dark Mode"
+    ]
+  },
+  "typography": {
+    "fonts": {
+      "headings": {
+        "family": "Outfit, sans-serif",
+        "description": "Friendly, geometric, and distinct sans-serif that avoids the 'generic AI' look.",
+        "weights": [400, 700, 900]
+      },
+      "body": {
+        "family": "Atkinson Hyperlegible, sans-serif",
+        "description": "Specifically designed for low vision, ensuring highly distinct characters (e.g., l, 1, I, O, 0).",
+        "weights": [400, 700]
+      }
+    },
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none",
+      "h2": "text-3xl sm:text-4xl leading-tight",
+      "h3": "text-2xl sm:text-3xl leading-snug",
+      "body": "text-lg sm:text-xl leading-relaxed",
+      "small": "text-base uppercase tracking-[0.1em]",
+      "note": "Base font size must be scalable and larger than typical apps to accommodate low-vision users natively."
+    },
+    "rules": [
+      "Never use Inter or Roboto.",
+      "Ensure body text maintains a contrast ratio of \u22657:1 against its background (WCAG AAA).",
+      "Maintain loose line-height (leading-relaxed) for all body copy to aid neurodivergent reading."
+    ]
+  },
+  "colors": {
+    "themes": {
+      "light_default": {
+        "description": "Warm Sand Base with Deep Forest Green. Organic, friendly, high contrast.",
+        "variables": {
+          "--bg-base": "#FFFDF8",
+          "--text-main": "#0A1128",
+          "--primary": "#1E5C45",
+          "--primary-foreground": "#FFFFFF",
+          "--secondary": "#B33925",
+          "--secondary-foreground": "#FFFFFF",
+          "--border-color": "#0A1128",
+          "--focus-ring": "#B33925"
+        }
+      },
+      "true_high_contrast": {
+        "description": "Pure black and white with yellow highlights.",
+        "variables": {
+          "--bg-base": "#000000",
+          "--text-main": "#FFFFFF",
+          "--primary": "#FFFF00",
+          "--primary-foreground": "#000000",
+          "--secondary": "#FFFFFF",
+          "--secondary-foreground": "#000000",
+          "--border-color": "#FFFFFF",
+          "--focus-ring": "#FFFF00"
+        }
+      },
+      "calm_low_stim": {
+        "description": "Soft blue-grey base with muted, readable accents. Avoids pure white or pure black.",
+        "variables": {
+          "--bg-base": "#F0F4F8",
+          "--text-main": "#1A202C",
+          "--primary": "#2B6CB0",
+          "--primary-foreground": "#FFFFFF",
+          "--secondary": "#4A5568",
+          "--secondary-foreground": "#FFFFFF",
+          "--border-color": "#4A5568",
+          "--focus-ring": "#2B6CB0"
+        }
+      },
+      "dark_mode": {
+        "description": "Deep grey base with high-visibility cyan accents.",
+        "variables": {
+          "--bg-base": "#121212",
+          "--text-main": "#E0E0E0",
+          "--primary": "#64FFDA",
+          "--primary-foreground": "#000000",
+          "--secondary": "#BB86FC",
+          "--secondary-foreground": "#000000",
+          "--border-color": "#E0E0E0",
+          "--focus-ring": "#64FFDA"
+        }
+      }
+    }
+  },
+  "layout_and_spacing": {
+    "strategy": "Generous Spacing Philosophy",
+    "padding_scale": ["p-6", "p-8", "p-12", "p-16"],
+    "grids": {
+      "lobby": "grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8",
+      "gameplay": "One-action-at-a-time focus. Use center flex layouts or pure linear flows. No complex sidebars."
+    },
+    "rules": [
+      "Containers with borders MUST use internal padding (p-6 or p-8) to prevent text collision.",
+      "Mobile images/cards must not exceed 80vh.",
+      "Do not center paragraphs; always left-align for easier reading."
+    ]
+  },
+  "components": {
+    "cards": {
+      "style": "Neo-brutalist tactile approach. Solid backgrounds matching theme base, thick border (border-2 or border-4) matching --border-color, and a hard drop shadow (e.g., shadow-[8px_8px_0px_var(--border-color)]) to create a definitive, undeniable click boundary.",
+      "hover": "-translate-y-1 shadow-[12px_12px_0px_var(--border-color)] transition-transform duration-200"
+    },
+    "buttons": {
+      "style": "Large, chunky buttons. Minimum height 64px (h-16). Thick border, solid colors.",
+      "states": "Hover must shift to a noticeably different shade while preserving contrast. Focus must have a 4px offset outline using the --focus-ring color."
+    },
+    "accessibility_panel": {
+      "style": "Fixed overlay or expansive dialog using Shadcn UI. Needs massive toggles/sliders for text size, contrast modes, motion reduction, captions, TTS speed, and switch-scan mode."
+    },
+    "game_tiles": {
+      "style": "Aspect-square or tall bento cards. Needs distinct SVG icons (use Lucide React or Phosphor), clear H3 headings, and an explicit 'Play' button inside the card for screen readers."
+    }
+  },
+  "accessibility": {
+    "tap_targets": "Minimum 56px by 56px for all interactive elements.",
+    "focus_rings": "Mandatory 3px or 4px solid outline with 2px offset for keyboard navigation. No zero-outline styles allowed.",
+    "aria": "All buttons, images, and state changes must have ARIA labels. Use aria-live='polite' for game feedback and TTS.",
+    "motion": "Respect prefers-reduced-motion. No flashing above 3Hz. Standard transitions should be subtle (opacity/transform) and slow (duration-200 or 300).",
+    "cues": "Do NOT rely on color or sound alone. Every audio cue must have a text/visual caption. Every color change must have a text/icon equivalent.",
+    "testing": "All interactive elements MUST include a data-testid attribute in kebab-case."
+  },
+  "media": {
+    "icons_library": "lucide-react (use thick stroke-width like 2.5 or 3 for high visibility)",
+    "image_urls": [
+      {
+        "category": "hero_background_calm",
+        "url": "https://static.prod-images.emergentagent.com/jobs/0fb32a6d-9e0b-4415-bea7-73d30119b5a0/images/6d041ecb4a13900d1f44297236007b8832eedab30be928ce14ccc4a4fc608e02.png",
+        "description": "A warm, inviting, abstract background with soft undulating organic shapes in warm sand, deep forest green, and terracotta. Use for the lobby or hero section in the 'Calm Low-Stimulation' or 'Light Default' themes."
+      },
+      {
+        "category": "hero_background_high_contrast",
+        "url": "https://static.prod-images.emergentagent.com/jobs/0fb32a6d-9e0b-4415-bea7-73d30119b5a0/images/1c343f8eaefa21b699b74d51ea8ca683fabd0c98fef394c55fa4e487a0a63ad9.png",
+        "description": "A bold, ultra-high contrast abstract graphic with pure black, striking yellow, and white geometric shapes. Use for the 'True High-Contrast' theme background."
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Load 'Outfit' and 'Atkinson Hyperlegible' from Google Fonts in index.css.",
+    "Implement the 4 distinct color themes as CSS variables in index.css and a ThemeProvider context to toggle them.",
+    "Use standard HTML/Tailwind for the Lobby layout (Bento grid) and Game screens to ensure maximum layout freedom and semantic ARIA compliance.",
+    "Use Shadcn UI primarily for complex logical components: the Accessibility Settings Dialog/Sheet, Selects (for language), and Sliders (TTS speed). Heavily customize Shadcn elements to meet the 64px tap target and thick border requirements.",
+    "All game screens must enforce 'one-action-at-a-time'. Do not clutter game screens with unnecessary navigation besides a clear 'Back/Exit' button and a 'Help' button.",
+    "Ensure the application includes a robust LocalStorage setup to save progress and accessibility settings.",
+    "Use standard <img> tags with alt text for the media URLs provided. Do not use background images where important visual context is needed.",
+    "Include data-testid on every interactive button, link, and input."
+  ]
+}
