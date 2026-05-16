@@ -1,0 +1,21 @@
+{
+  "name": "accessibility-games",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A fully accessible web app of 21 calm, multilingual mini-games.",
+  "scripts": {
+    "setup":           "bash ./setup.sh",
+    "setup:frontend":  "cd frontend && yarn install",
+    "setup:backend":   "cd backend && python3 -m pip install -r requirements.txt",
+    "start":           "cd frontend && yarn start",
+    "start:frontend":  "cd frontend && yarn start",
+    "start:backend":   "cd backend && uvicorn server:app --reload --host 0.0.0.0 --port 8001",
+    "build":           "cd frontend && yarn build",
+    "lint":            "cd frontend && yarn eslint src",
+    "clean":           "rm -rf frontend/node_modules frontend/build"
+  },
+  "engines": {
+    "node": ">=18",
+    "yarn": ">=1.22"
+  }
+}
